@@ -13,7 +13,9 @@ class BollingerChecker:
         myTicker = yf.Ticker(ticker)
         df = pd.DataFrame(myTicker.history(period="2mo"))
         # check if we have latest info
-        if (df.iloc[-1].name.day != datetime.today().day or len(df) < 30):
+        # if ((df.iloc[-1].name.day != datetime.today().day) or (len(df) < 30)):
+        if (len(df) < 30):
+            # retry ? a few times?
             print(f'missing data from yahoo for {ticker}')
             return
 

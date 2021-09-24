@@ -1,6 +1,7 @@
 import json
 import requests
 import threading
+from time import sleep
 
 # internal modules
 import discord_helpers as dh
@@ -55,6 +56,7 @@ def lambda_handler(event, context):
         webhook_body = dh.get_discord_webhook_body()
         webhook_body['embeds'][0]['fields'] = item
         requests.post(url=webhook_url, data=json.dumps(webhook_body), headers=headers)
+        sleep(0.5)
 
     if not bollinger_checker.list_of_potentials:
         webhook_body = dh.get_empty_discord_webhook_body("Nothing passed today")
