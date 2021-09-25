@@ -2,16 +2,13 @@ import json
 import requests
 import threading
 from time import sleep
+import os
 
 # internal modules
 import discord_helpers as dh
 from bollingerchecker import BollingerChecker
 
-# private discord
-# webhook_url = "https://discord.com/api/webhooks/886364439316680715/o7_gATx1Plsz1RsCXrdiDH4RRjQPn0SSVydGNCkJh73zuOhHMcFwEnObr2VnIJmZnxKz"
-
-# bollinger-gang webhook
-webhook_url = "https://discord.com/api/webhooks/886103176103751680/ATpx5TduS4YrR1hpf2Kpp50c4hEz_LKwufgrnvwsSnQiw1AKXytRch-WXnMTf6Z1n5UH"
+webhook_url = os.environ.get('webhook_url')
 
 def lambda_handler(event, context):
     """Sample pure Lambda function
