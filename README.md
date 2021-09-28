@@ -129,3 +129,15 @@ aws cloudformation delete-stack --stack-name bollinger-gang
 See the [AWS SAM developer guide](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/what-is-sam.html) for an introduction to SAM specification, the SAM CLI, and serverless application concepts.
 
 Next, you can use AWS Serverless Application Repository to deploy ready to use Apps that go beyond hello world samples and learn how authors developed their applications: [AWS Serverless Application Repository main page](https://aws.amazon.com/serverless/serverlessrepo/)
+
+## Create a custom layer
+
+we want to create a custom layer to include our pip packages on the aws lambda function
+
+go to the folder with the `requirements.txt` and run the following command to download the packages into a folder
+
+```bash
+pip install -r requirements.txt --target ./python
+```
+
+then we zip this for aws lambda

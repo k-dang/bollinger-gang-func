@@ -1,6 +1,8 @@
 import yfinance as yf
 import pandas as pd
 from datetime import datetime
+# technical analyis library
+from ta.volatility import BollingerBands
 
 # internal modules
 import discord_helpers as dh
@@ -19,10 +21,12 @@ class BollingerChecker:
             print(f'missing data from yahoo for {ticker}')
             return
 
-        df['SMA_20'] = df['Close'].rolling(window=20).mean()
-        df['STD_20'] = df['Close'].rolling(window=20).std()
-        df['Upper Band'] = df['SMA_20'] + (2 * df['STD_20'])
-        df['Lower Band'] = df['SMA_20'] - (2 * df['STD_20'])
+        indicator_bb = BollingerBands(close=df["Close"], window=20, window_dev=2)
+
+        # Add Bollinger Bands features
+        df['bb_bbm'] = indicator_bb.bollinger_mavg()
+        df['Upper Band'] = indicator_bb.bollinger_hband()
+        df['Lower Band'] = indicator_bb.bollinger_lband()
         df.dropna(inplace=True)
 
         current_price = myTicker.info['regularMarketPrice']

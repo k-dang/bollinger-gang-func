@@ -246,3 +246,4 @@ $RECYCLE.BIN/
 .aws-sam/*
 
 webhook_config
+bollinger-gang-layer

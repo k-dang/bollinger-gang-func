@@ -8,8 +8,6 @@ import os
 import discord_helpers as dh
 from bollingerchecker import BollingerChecker
 
-webhook_url = os.environ.get('webhook_url')
-
 def lambda_handler(event, context):
     """Sample pure Lambda function
 
@@ -31,6 +29,9 @@ def lambda_handler(event, context):
 
         Return doc: https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html
     """
+    # discord webhook url
+    webhook_url = os.environ.get('webhook_url')
+
     # headers for discord webhook
     headers = {'Content-Type': 'application/json'}
 
