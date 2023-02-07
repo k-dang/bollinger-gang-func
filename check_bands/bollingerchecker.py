@@ -13,7 +13,7 @@ class BollingerChecker:
 
     def check_ticker(self, ticker):
         ticker_data = yf.Ticker(ticker)
-        df = pd.DataFrame(ticker_data.history(period="2mo"))
+        df = ticker_data.history(period="3mo")
         # check if we have latest info
         # if ((df.iloc[-1].name.day != datetime.today().day) or (len(df) < 30)):
         if (len(df) < 30):
@@ -29,7 +29,9 @@ class BollingerChecker:
         df['Lower Band'] = indicator_bb.bollinger_lband()
         df.dropna(inplace=True)
 
-        current_price = ticker_data.info['regularMarketPrice']
+        # get price differently?
+        current_price = ticker_data.fast_info['last_price']
+        
         upper_price = df.iloc[-1]['Upper Band']
         lower_price = df.iloc[-1]['Lower Band']
 
@@ -39,7 +41,7 @@ class BollingerChecker:
             latest_option_date = ticker_data.options[0]
             opt = ticker_data.option_chain(latest_option_date)
             calls_df = opt.calls
-            top_10_calls_df = calls_df[calls_df['strike'] > upper_price].iloc[:10][['strike', 'lastPrice', 'bid', 'ask', 'impliedVolatility']]
+            top_10_calls_df = calls_df[calls_df['strike'] > current_price].iloc[:10][['strike', 'lastPrice', 'bid', 'ask', 'impliedVolatility']]
             self.list_of_potentials.append([
                 {
                     'name': ticker,
@@ -59,7 +61,7 @@ class BollingerChecker:
             latest_option_date = ticker_data.options[0]
             opt = ticker_data.option_chain(latest_option_date)
             puts_df = opt.puts
-            top_10_puts_df = puts_df[puts_df['strike'] < lower_price].iloc[-10:][['strike', 'lastPrice', 'bid', 'ask', 'impliedVolatility']]
+            top_10_puts_df = puts_df[puts_df['strike'] < current_price].iloc[-10:][['strike', 'lastPrice', 'bid', 'ask', 'impliedVolatility']]
             self.list_of_potentials.append([
                 {
                     'name': ticker,
