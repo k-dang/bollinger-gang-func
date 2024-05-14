@@ -90,3 +90,16 @@ class BollingerChecker:
         """
         lower_current_threshold = price * 0.99
         return (price < lower_band_price) or (lower_current_threshold < lower_band_price)
+    
+if __name__ == "__main__":
+    text_file = open("tickers_list.txt", "r")
+    tickers = text_file.read().split('\n')
+
+    bollinger_checker = BollingerChecker()
+
+    for ticker in tickers:
+        try:
+            bollinger_checker.check_ticker(ticker)
+        except Exception as e:
+            print(e)
+    print(bollinger_checker.list_of_potentials)

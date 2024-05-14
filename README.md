@@ -141,3 +141,11 @@ pip install -r requirements.txt --target ./python
 ```
 
 then we zip this for aws lambda
+
+## Deploying to AWS lambda
+
+Recommended way of deploying
+
+```bash
+sam deploy --guided
+```

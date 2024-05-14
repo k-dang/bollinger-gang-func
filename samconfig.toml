@@ -1,11 +1,15 @@
 version = 0.1
 [default]
+[default.global.parameters]
+stack_name = "bollinger-gang"
+region = "ca-central-1"
+
 [default.deploy]
 [default.deploy.parameters]
-stack_name = "bollinger-gang"
 s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-mqc7p2hdvd3x"
 s3_prefix = "bollinger-gang"
-region = "ca-central-1"
 confirm_changeset = true
 capabilities = "CAPABILITY_IAM"
 image_repositories = []
+resolve_s3 = true
+disable_rollback = true
