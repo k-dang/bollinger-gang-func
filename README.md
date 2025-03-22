@@ -147,5 +147,11 @@ then we zip this for aws lambda
 Recommended way of deploying
 
 ```bash
+sam build
 sam deploy --guided
+```
+
+
+```
+aws lambda publish-layer-version --layer-name boll-func-layer --zip-file fileb://layer.zip --compatible-runtimes python3.9
 ```

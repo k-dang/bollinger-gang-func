@@ -1,8 +1,8 @@
 import json
 import requests
-import threading
 from time import sleep
 import os
+from concurrent.futures import ThreadPoolExecutor
 
 # internal modules
 import discord_helpers as dh
@@ -36,18 +36,11 @@ def lambda_handler(event, context):
     headers = {'Content-Type': 'application/json'}
 
     bollinger_checker = BollingerChecker()
-    threads = []
-    text_file = open("tickers_list.txt", "r")
-    tickers = text_file.read().split('\n')
-    for ticker in tickers:
-        t = threading.Thread(target=bollinger_checker.check_ticker, args=(ticker,))
-        threads.append(t)
-    
-    for thread in threads:
-        thread.start()
+    tickers = open("tickers_list.txt", "r").read().split('\n')
 
-    for thread in threads:
-        thread.join()
+    # Use ThreadPoolExecutor with max 5 threads
+    with ThreadPoolExecutor(max_workers=5) as executor:
+        executor.map(bollinger_checker.check_ticker, tickers)
 
     for item in bollinger_checker.list_of_potentials:
         # construct webhook body

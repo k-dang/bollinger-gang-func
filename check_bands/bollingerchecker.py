@@ -1,5 +1,4 @@
 import yfinance as yf
-import pandas as pd
 from datetime import datetime
 # technical analyis library
 from ta.volatility import BollingerBands
@@ -12,6 +11,7 @@ class BollingerChecker:
         self.list_of_potentials = []
 
     def check_ticker(self, ticker):
+        print(f'[BollingerChecker][date({datetime.now()})]: checking {ticker}')
         ticker_data = yf.Ticker(ticker)
         df = ticker_data.history(period="3mo")
         # check if we have latest info
@@ -77,6 +77,8 @@ class BollingerChecker:
                 }
             ])
 
+        print(f'[BollingerChecker][date({datetime.now()})]: finished checking {ticker}')
+
     def is_past_upper_threshold(self, price, upper_band_price):
         """
         checks if the price is past the upper band or is within 1% of the upper band
@@ -92,14 +94,17 @@ class BollingerChecker:
         return (price < lower_band_price) or (lower_current_threshold < lower_band_price)
     
 if __name__ == "__main__":
-    text_file = open("tickers_list.txt", "r")
-    tickers = text_file.read().split('\n')
+    # text_file = open("tickers_list.txt", "r")
+    # tickers = text_file.read().split('\n')
 
-    bollinger_checker = BollingerChecker()
+    # bollinger_checker = BollingerChecker()
 
-    for ticker in tickers:
-        try:
-            bollinger_checker.check_ticker(ticker)
-        except Exception as e:
-            print(e)
-    print(bollinger_checker.list_of_potentials)
+    # for ticker in tickers:
+    #     try:
+    #         bollinger_checker.check_ticker(ticker)
+    #     except Exception as e:
+    #         print(e)
+    # print(bollinger_checker.list_of_potentials)
+    ticker_data = yf.Ticker("INTU")
+    df = ticker_data.history(period="3mo")
+    print(df)
