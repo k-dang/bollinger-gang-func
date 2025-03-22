@@ -8,8 +8,8 @@ region = "ca-central-1"
 [default.deploy.parameters]
 s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-mqc7p2hdvd3x"
 s3_prefix = "bollinger-gang"
-confirm_changeset = true
+confirm_changeset = false
 capabilities = "CAPABILITY_IAM"
 image_repositories = []
-resolve_s3 = true
+resolve_s3 = false
 disable_rollback = true
