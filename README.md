@@ -150,8 +150,3 @@ Recommended way of deploying
 sam build
 sam deploy --guided
 ```
-
-
-```
-aws lambda publish-layer-version --layer-name boll-func-layer --zip-file fileb://layer.zip --compatible-runtimes python3.9
-```
